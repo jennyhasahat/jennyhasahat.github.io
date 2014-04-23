@@ -1,0 +1,9 @@
+#Make index.php be the default index page
+DirectoryIndex playerstage-manual.html
+
+RewriteEngine On
+RewriteRule ^playerstage-manual.html$ /~jowen/playerstage-manual.html [R=301,L]
+#rewrite the html index page to a pretty url
+#RewriteRule ^index.html$ /jowen [R=301,L]
+
+

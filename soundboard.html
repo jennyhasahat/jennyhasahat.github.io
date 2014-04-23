@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+<head>
+	<title>Jenny Owen's website - E-Puck Audio Extension</title>
+	<meta name="Keywords" content="cosmos, swarm, swarming, robot, robotics, complex, complexity, complex systems, systems, emergence, emergent systems, research, epuck, e-puck, audio" />
+	<meta name="Description" content="This page is about an extension I made for the e-puck robots which extends the robots' sound signalling capabilities." />
+	<meta name="Author" content="Jenny Owen" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link type="text/css" href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<style type="text/css">
+	body {
+		padding-top: 60px;
+		padding-bottom: 40px;
+	}
+	.sidebar-nav {
+		padding: 9px 0;
+	}
+
+	@media (max-width: 980px) {
+		/* Enable use of floated navbar text */
+		.navbar-text.pull-right {
+			float: none;
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+    </style>
+	<link type="text/css" href="./bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen" />
+</head>
+
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="brand" href="#">Jenny Owen's Website</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="./index.php">Home</a></li>
+						<!--<li><a href="./reading-list.php">Stuff I've been reading</a></li>
+						<li><a href="./glossary.html">A glossary of useful words</a></li> -->
+						<li><a href="./hashlife.html">Gosper's Algorithm</a></li>
+						<li><a href="./playerstage-manual.html">Player/Stage Manual</a></li>
+						<li><a href="./soundboard.html">E-Puck Extension</a></li>
+					</ul>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="hero-unit">
+					<h1>E-Puck Audio Extension</h1>
+					<p>A page about an extension I made for the e-puck robots which extends the robots' sound signalling capabilities.</p>
+				</div>
+			</div>
+		</div>
+
+
+	
+		<div class="row-fluid">
+		<div class="span6">
+				<div class="thumbnail" text-alignment="center">
+					<img src="./mypics/soundboard/epuck-w-soundboard.jpg" alt="E-Puck Soundboard" href="http://www.e-puck.org" />
+					<p class="text-center">An e-puck with the finished soundboard.</p>
+				</div>
+			</div>
+			<div class="span6">				
+				<h2 id="WhatIsThis">What Is This?</h2>
+			
+				<p>For my PhD research I wanted to experiment with robots that are capable of communicating information about their environment with each other.</p>
+			
+				<p>In the university we have 13 <a href="http://www.e-puck.org">E-Puck</a> robots, for swarm robotics research.
+				These robots can communicate with each other using: LEDs, a camera, Bluetooth, microphones, a speaker and infra-red sensor messaging.</p>
+				<p>One of the things I needed the robots to be able to do is tell each other about the location of a food source and then express some information about the food source. This is so that other robots can decide whether or not to go towards to food source and the direction to go in.</p>		
+				<p>I chose to use sound as the communication medium for a few reasons:</p>
+				<ul>
+					<li>
+					One robot can broadcast a signal omnidirectionally to multiple robots in range.
+					</li>
+					<li>
+					Sound waves hold implicit information about the distance from the listener to the source in their amplitude. By using multiple microphones, we can also (in theory) measure the direction the sound came from.
+					</li>
+					<li>
+					It's simpler to interpret a microphone signal than a camera signal, and it's easy to add good microphones to the extension board to improve the sound readings.
+					</li>
+					<li>
+					Sound transmission and reception is mostly independent of the robots orientation - i.e. they don't have to be facing each other for it to work, which wouldn't be true for LED signalling.
+					</li>
+				</ul>
+
+				<p>The epucks do already have a speaker on them (as you can see in the picture) and microphones, but these all point upwards, so aren't best suited for robot to robot communication (and I needed to use the <a href="http://lpuck.sourceforge.net/">lpuck extension</a>, which allows the robots to run linux and <a href="http://playerstage.sourceforge.net/">player/stage</a> but completely covers all the microphones). 
+				Maybe you're thinking <em>"but what about the Bluetooth?"</em>, well firstly, you can't tell the location of the source from the Bluetooth signal.
+				Also the e-pucks' Bluetooth is set up in slave mode, so e-pucks can't initiate a connection with each other. It is technically possible to change this I think, but it can easily brick the e-pucks (not good).</p>
+			</div>
+		</div>
+		<hr />
+		
+		<div class="row-fluid">
+			<div class="span6">			
+				<h2 id="HowItWorks">How It Works</h2>
+			
+				<p>There are three functions the soundboard needs to have:</p>
+				<ol>
+					<li><a href="#PlayingSound" class="internal">Play a sound</a></li>
+					<li><a href="#MeasuringFreq" class="internal">Measure sound frequencies</a></li>
+					<li><a href="#MeasuringDOA" class="internal">Measure the direction that a sound came from</a></li>
+				</ol>
+			
+				<h3 id="PlayingSound">Playing a sound</h3>
+				<p>The soundboard replaces the board on the e-puck that has a speaker on it.
+				To get it to play a tone I just put a better speaker on the soundboard and connected it to the main e-puck body along the exisiting speaker connection.</p>
+			
+			
+				<p>The standard e-puck code library for sound generation doesn't allow you to just play a simple tone, you have to convert a wav file (or similar) to a sequence of hexadecimal numbers which the sound generator reads in and plays.
+				The <a href="http://dl.acm.org/citation.cfm?id=1278288">Glowbots</a> project, however, created a really good, stripped down version of the original e-puck library, called the epuck economy library. This includes a <a href="http://en.wikibooks.org/wiki/Sound_Synthesis_Theory/Oscillators_and_Wavetables">really cool little wavetable synthesiser</a> that can generate, play and combine 3 different tones at once. The original Glowbots project page doesn't seem to be available anymore but there is a sourceforge site for the 
+				<a href="http://epuckeconomylib.sourceforge.net">e-puck economy library</a>.</p>
+
+			</div>
+			<div class="span6">
+				<div class="thumbnail" text-alignment="center">
+					<img src="./mypics/soundboard/walter-the-epuck.jpg" alt="EPuck robot" href="http://www.e-puck.org" />
+					<p class="text-center">An e-puck.</p>
+				</div>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">			
+				<h3 id="MeasuringFreq">Measure sound frequencies</h3>
+				<p>To do this I used a <a href="http://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier Transform</a> (FFT) library I found and applied it to the signal from the microphones.
+				The library I used was the public domain <a href="http://www.alciom.com/en/downloads/free-downloads/198-fftpic.html">FFTpic18 library by Alciom</a>.</p>
+			
+				<p>This library was specifically written for use on the PIC18 family of microcontrollers. It's got a small codebase and is very simple to use; you just write your data into a buffer and then call one of two FFT functions to turn that buffer data into FFT'd data. It can do either a 128 point FFT on complex data (i.e. data that has a real and imaginary element to it), or a 256 point FFT on real (i.e. not complex) data.</p>
+				<p>The signals from the microphones are not complex, so I used the 256 point real data FFT.
+				For reasons I'll cover in the next section there are 3 microphones on the soundboard, so that needs 3 * 256 int buffers for each microphone's signal, plus another 256 ints for the FFT buffer. That's 1024 ints, or 2048 bytes, which is more RAM than I had available on the PIC I was using.To fix this I edited the library code to run a 128 point FFT instead of 256, which meant I only needed 128 data readings per microphone (instead of 256). To reduce the memory use even more, I stored each mic readings as one byte instead of a 16-bit int, saving another 128 bytes per mic. The total memory usage for the microphone buffering and FFT is now 3 microphone buffers * 128 bytes each + 128 ints for the FFT buffer = 640 bytes.</p>
+				<p>The modified FFT library code is available in the <a href="#Downloads" class="internal">downloads</a> section of this page.</p>
+			
+			
+				<h3 id="MeasuringDOA">Measure the direction a sound came from</h3>
+				<p>The robots need to be able to move towards a sound source, so a robot needs to be able to measure of how much to the left or right it should turn in order to be facing the sound source. This is called <a href="http://en.wikipedia.org/wiki/Direction_of_arrival">Direction of Arrival</a> (DOA) estimation.
+				I tried two different methods of DOA estimation: delay and sum beamforming, and just comparing the how loud a tone was in the left and right microphones. Sadly neither method was particularly reliable and I ran out of time to work on the soundboard.
+				However, the methodology for the beamforming is pretty interesting, and maybe the results can be improved upon with further work.</p>
+				
+				<h4>Delay and Sum Beamforming</h4>			
+				<p>The first DOA estimation method I tried was delay and sum beamforming.
+				In this method, you have several microphones, evenly spaced on a flat plane. The time difference between the sound reaching each microphone is used to guess the DOA.</p>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<ul class="thumbnails">
+				<li class="span4 offset2">
+					<div class="thumbnail">
+						<img src="./mypics/soundboard/das-before.png" alt="delay and sum beamforming, before applying delay." />
+						<p>As sound travels, it reaches each microphone at a different time. The resulting sum is noisy and has a low amplitude.</p>
+					</div>
+				</li>
+				<li class="span4">
+					<div class="thumbnail">
+						<img src="./mypics/soundboard/das-after.png" alt="delay and sum beamforming, after applying delay." />
+			<p>By delaying the data we can delay the signal at the same time, so the sum has a large amplitude and there is less noise.</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">	
+				<p>The amount of time the sound spends travelling between microphones depends on the DOA of the sound. If the sound source is straight ahead there is no delay, if it is fully to the left or right there is the maximum delay. By applying a delay to the microphone signals, we can effectively "steer" the microphones so that they listen in one direction at a time. By comparing the results of this steering we can estimate a DOA for the sound source.
+				For more information about how delay and sum beamforming works, I would recommend <a href="http://www.labbookpages.co.uk/audio/beamforming.html">Andy Greensted's lab book pages</a>.
+			That site includes equations for working out the (idealised) frequency response of any microphone array, along with very helpful and easy to follow derivations of the equations.</p>
+			
+				<p>Essentially, you would ideally want to have as fast a sample rate as possible, so that you can delay the signals more precisely. The microphones should be as far apart as possible so that the delay between them is larger, and there should be as many microphones as possible to make the delay and sum more accurate.		
+			For this project though, the soundboard is limited by the size of the e-pucks and the speed of the microprocessor on the soundboard. Consequently, the total microphone spacing shouldn't really exceed 7cm (the diameter of the e-pucks), and since the processor can only take so many readings each second, adding more microphones will reduce the overall sample rate.
+			After running the numbers I decided that 3 microphones spaced 5cm apart would give the best results within these constraints. The e-pucks have a 7cm diameter and the microphones have a total width of 10cm, so there is only a small overshoot. The 3 microphones have a sample rate of 38kHz, which is already quite low, and adding another microphone reduces the sample rate to 28.5kHz.</p>
+			
+				<p>I built the soundboard and tested the DOA estimation with the delay and sum beamforming. To reduce processing and to limit the amount of data being sent from the soundboard to the e-puck, I only measured the steering angles of &plusmn;90&deg;, &plusmn;45&deg; and 0&deg;.
+				A tone was classed as "detected" if the power spectral density at that frequency was above a threshold, for 3 out of the 5 measured angles. If a tone was detected then the measured angle that gave the largest power spectral density was used as the DOA estimate.</p>
+				<p>To test the soundboard's frequency and DOA estimation, I played all the test tones at it using another e-puck with a soundboard. The signalling e-puck was at a distance of 20cm and at DOAs of &plusmn;90&deg;, &plusmn;45&deg; and 0&deg;. 
+				
+				The receiving soundboard was able to correctly guess the frequency approximately 66&#37; of the time, but could only correctly estimate the DOA 17&#37; of the time. Since there were only 5 possibilities for the DOA estimation this was worse than randomly guessing. I tried a few different approaches to determining the frequency and DOA but nothing really improved on this success rate.</p>
+				<!-- <p>I tried other methods of guessing the frequency and DOA from the delay and sum results but nothing significantly improved the performance. The delay accuracy could be improved by increasing the sample rate, but the PIC was already sampling as fast as possible, and increasing the sample rate negatively impacts the FFT accuracy (since each FFT results band has a bandwidth of <code>sample_rate/number_FFT_points</code>).</p> -->
+				
+				<h4>Amplitude Comparison</h4>
+				
+				<p>
+				After being unsuccessful with the beamforming approach I experimented with comparing the amplitude of the left and right microphones to get an inexact idea of whether a sound source was to the left or right of the robot.</p>
+				
+				<p>
+				Without the constraints of beamforming we could reduce the microphone sample rate down to 8k.
+				This had 2 benefits. Firstly the maximum signal the <a href="#PlayingSound">economy library wavetable synthesis</a> can produce is 3.5kHz. So a sample rate of 38kHz is somewhat excessive, since only a 7kHz is needed to detect this frequency.
+				Secondly, a smaller sample rate means that the FFT divides the spectrum into narrower bands. 
+				
+				An FFT band's width on the frequency spectrum (it's bandwidth) is the sample rate divided by the number of FFT points (in our case 128). With a 38kHz sample rate, each band is 296Hz wide, but at 8k the bands are only 62.5Hz wide.
+				Consequently, we can detect more distinct frequencies, up to the maximum signal freq of 3.5kHz, with the lower sample rate.</p>
+				<p>
+				With this method of DOA estimation, an FFT was done on the raw microphone data (instead of the delayed and summed microphone readings). To measure the amplitude of the received signal the FFT'd signals from all the microphones were summed. To measure the DOA the FFT of the right microphone's data was subtracted from the FFT of the left microphone. This gave a left-right differential measure which gives a rough indication of the DOA.</p>
+				
+				<p>
+				The picture below shows some results of me measuring amplitude and differential of a signal as I move the receiving robot further away from the sound source at different DOAs. From this data I did some thresholding in order to estimate the frequency and DOA of incoming signals. This gave over all successful frequency and DOA estimation rates of up to 93&#37; and 39&#37; respectively.
+				Whilst this isn't perfect, it is an improvement on the delay and sum beamforming.
+				</p>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<ul class="thumbnails">
+				<li class="span12">
+					<div class="thumbnail">
+						<img src="./mypics/soundboard/ampcomparisonresults.png" alt="graphs showing measured amplitude and differential results"/>
+						<p>Amplitude comparison data from the soundboard. The differential should be negative with the negative DOA angles. Each data point shows the mean of 40 readings. You can see that there are definite trends in terms of how the differential changes with the actual DOA, but the data is quite erratic and sensitive to environmental conditions.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+		<div class="row-fluid">
+			<div class="span12">
+				
+				<!-- <h2 id="TechnicalInfo">
+					Technical Information
+				</h2>
+				flow chart?
+				microphones and preamps (sparkfun link)
+				what pic used? Programmed with pickit2 and mplab (P18F26K22)
+				FFT and DOA estimation done on the pic, results sent to e-puck over i2c bus
+				epuck unpacks the data and presents it to api
+				-->
+				
+				<h2 id="Downloads">Downloads</h2>
+<!--				This section of the page is still under construction! Expect it to be finished by 15/04/13.
+			</div>
+		</div>
+		<div class="row-fluid">
+			<ul class="thumbnails">
+				<li class="span6 offset3">
+					<div class="thumbnail">
+						<img src="./mypics/soundboard/flowchart.png" alt="Information flow from microphones to the epuck" />
+						<p>fesorjgaoe</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="row-fluid">
+			<div class="span12">
+-->
+				<h3>Hardware</h3>
+				<ul>
+					<li><a href="https://dl.dropboxusercontent.com/u/9291393/mywebsite/soundboard/circuit-diagram.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/soundboard/circuit-diagram');">Circuit Diagram</a></li>
+					<li>I tried a few different microphone pre-amplifier circuits, and the best was the <a href="https://www.sparkfun.com/products/9964">Sparkfun Breakout Board for Electret Microphone</a>. I connected three of these to the soundboard via 3-pin headers.</li>
+					<li>Eagle files for printing your own version of the soundboard: <a href="https://dl.dropboxusercontent.com/u/9291393/mywebsite/soundboard/soundboard-eagle.tar" onClick="javascript: pageTracker._trackPageview('/downloads/soundboard/eagle-files');">soundboard-eagle.tar</a></li>
+					<li>3D printable <a href="https://dl.dropboxusercontent.com/u/9291393/mywebsite/soundboard/mic-holder.stl" onClick="javascript: pageTracker._trackPageview('/downloads/soundboard/mic-mount');">microphone mount</a> and <a href="https://dl.dropboxusercontent.com/u/9291393/mywebsite/soundboard/speaker-holder.stl" onClick="javascript: pageTracker._trackPageview('/downloads/soundboard/speaker-mount');">speaker mount</a>. The speaker mount is designed to fit <a href="http://onecall.farnell.com/pro-signal/abs-224-rc/speaker-20x40mm-4ohm-2w-paper/dp/1761631">this speaker</a>.</li>			
+				</ul>
+				
+				<h3>Code</h3>
+				<ul><li></li>
+					<li><a href="http://www.alciom.com/en/downloads/free-downloads/198-fftpic.html">The original FFT library by Alciom</a>. This can do a 256 point FFT on real-valued data saved into an FFT buffer.</li>
+					<li><a href="https://dl.dropboxusercontent.com/u/9291393/mywebsite/soundboard/fftlib128.tar" onClick="javascript: pageTracker._trackPageview('/downloads/soundboard/128FFT');">A modified version of the Alciom FFT library</a> which does a 128 point FFT on data saved into an FFT buffer.
+						<ul>
+							<li>To modify the code to run on a different model of PIC you'll need to edit lines 19 to 24 of fftpic18.asm and line 366 of myfixed.inc so that instead of PIC18F26K22 it says whatever your PIC is.</li>
+							<li>fftpic18.asm reserves memory locations 0x100 to 0x240, so if your PIC doesn't have up to 576 (0x240) bytes of RAM, the FFT library will not work.</li>		
+						</ul>
+					</li>
+					<li><a href="https://dl.dropboxusercontent.com/u/9291393/mywebsite/soundboard/soundboard-code.tar" onClick="javascript: pageTracker._trackPageview('/downloads/soundboard/complete-code');">The complete soundboard code</a>. This includes the code that runs on the PIC and some code for the e-puck to receive data from the soundboard over I<sup>2</sup>C.</li>
+				</ul>
+			</div>
+		</div>
+
+	</div><!-- end container-fluid -->
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+		try {
+			var pageTracker = _gat._getTracker("UA-7390385-1");
+			pageTracker._trackPageview();
+		} catch(err) {}
+	</script>
+
+</body>
+
+</html>
