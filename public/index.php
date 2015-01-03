@@ -6,7 +6,7 @@
 	<meta name="Description" content="a place where I will put stuff I think might be important or interesting" />
 	<meta name="Author" content="Jenny Owen" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
+
 	<link type="text/css" href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
 	<style type="text/css">
 	body {
@@ -61,7 +61,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="row-fluid">
 			<div class="span12">
 				<p>My supervisors are <a href="http://www-users.cs.york.ac.uk/susan/">Susan Stepney</a>, <a href="http://www-users.cs.york.ac.uk/jtimmis/">Jon Timmis</a> and <a href="http://www.ias.uwe.ac.uk/~a-winfie/">Alan Winfield</a>.</p>
@@ -69,8 +69,8 @@
 				<p>My LinkedIn profile can be viewed <a href="http://uk.linkedin.com/pub/jennifer-owen/1b/a31/8b3">here</a>.</p>
 			</div>
 		</div>
-		
-		<?php 
+
+		<?php
 			$pictureset = array(
 				array(
 					'file' => './mypics/brokering_deals.jpg',
@@ -110,15 +110,15 @@
 					'alt'	 => 'Image (C) Chris Marriott'
 				),
 				array(
-					'file' => 'http://dl.dropbox.com/u/9291393/mywebsite/1201250164-Ian-Martindale.jpg',
+					'file' => './mypics/female_engineer.jpg',
 					'text' => 'being a female engineer',
 					'link' => 'http://www.ianmartindale.co.uk',
 					'alt'	 => 'Image (C) Ian Martindale, York based wedding and portrait photographer',
 					'width' => 650
-				),					
+				),
 			);
 		?>
-		
+
 		<div class="row-fluid">
 			<div class="span12">
 			<h2>What I look like, in case you need to know.</h2>
@@ -127,7 +127,7 @@
 			</div>
 		</div>
 		<div class="row-fluid">
-			<div class="span7 offset2">	
+			<div class="span7 offset2">
 				<?php if(array_key_exists('link', $pictureset[$displaypic]) ){?>
 					<a href="<?php print $pictureset[$displaypic]['link']?>">
 				<?php }?>
@@ -146,11 +146,11 @@
 				<?php }?>
 			</div>
 		</div>
-		
-		
-		
-		
-		
+
+
+
+
+
 		<hr />
 		<div class="row-fluid">
 			<div class="span5">
@@ -162,26 +162,26 @@
 				<p><strong>I am a member of the CoSMoS research group.</strong></p>
 				<p>I've made a <a onClick="javascript: pageTracker._trackPageview('/downloads/cosmos-printable-stl');" href="http://dl.dropbox.com/u/9291393/mywebsite/3D-modelling/cosmos-printable.stl">3D printable version of the CoSMoS logo</a> which you can download and print for yourself. It will (ideally) give you an object that looks like <a onClick="javascript: pageTracker._trackPageview('/downloads/cosmos-printable-png');" href="http://dl.dropbox.com/u/9291393/mywebsite/3D-modelling/cosmos-printable3D.png">this</a>.</p>
 			</div>
-		</div>	
+		</div>
 		<hr />
-		
-		
-		
-		
-				
+
+
+
+
+
 		<div class="row-fluid">
 			<div class="span12">
 				<h2>Publications</h2>
 				<ul>
 					<li>Jennifer Owen (2011) "Developing a Simulation and Hardware for a Robot Swarm Using Sound to Communicate". <i>In: Proceedings of the Fourth York Doctoral Symposium on Computer Science, York UK</i>. pp98-99. <a href="./publications/DevelopingaSimulationandHardwareforaRobotSwarmUsingSoundtoCommunicate.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/yds2011abstract');">Poster abstract</a>, <a href="http://dl.dropbox.com/u/9291393/mywebsite/DevelopingaSimulationandHardwareforaRobotSwarmUsingSoundtoCommunicatePOSTER.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/yds2011poster');">poster</a>.</li>
-				
+
 					<li>Jennifer Owen, Susan Stepney, Jon Timmis and Alan Winfield (2010)<a href="./publications/ExploitingLooseHorizontalCouplinginEvolutionarySwarmRobotics.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/ants2010');">"Exploiting Loose Horizontal Coupling In Evolutionary Swarm Robotics"</a>. <i>In: Swarm Intelligence, 7th International Conference, ANTS 2010. Brussels, Belgium</i> Lecture Notes in Computer Science vol. 6234. Springer-Verlag.</li>
 						<li>Jennifer Owen, (2010) <a href="./player/playerstage-tutorial-manual.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/psManualnew');">"How to Use Player/Stage, 2nd Edition".</a> Published online on my <a href="./player/playerstage-manual.html">Player\Stage page</a> </li>
-				
+
 					<li>Jennifer Owen (2009) "Investigating the Link Between Complexity and Evolution in Swarm Robotic Systems". QUALIFYING DISSERTATION.</li>
-					
+
 					<li>Jennifer Owen, (2009) <a href="./player/playerstage-tutorial-manual-2.1.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/psManual');">"How to Use Player/Stage".</a> Published online at <a href="http://playerstage.sourceforge.net/index.php?src=doc">playerstage.sourceforge.net</a></li>
-	
+
 					<li>N. Benatar, O. Qadir, J. Owen, P. Baxter, M. Neal (2009), "<a href="./publications/PControllerasanExpertSystemforManoeuvringRudderlessSailBoats.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/pcontrollerUKCI09');">P-Controller as an Expert System for Manoeuvring Rudderless Sail Boats</a>". <i>In: UK Workshop on Computational Intelligence (UKCI'09)</i>, University of Nottingham, September 7-9.</li>
 				</ul>
 			</div>
@@ -193,9 +193,9 @@
 				<p>My qualifying dissertation "Investigating the Link Between Complexity and Evolution in Swarm Robotic Systems" (which is a literature survey and a compulsory part of my PhD) won the <a href="http://www.york.ac.uk/admin/aso/prizes/prizeinfo.htm">K.M. Stott Prize</a> for the Best Qualifying Dissertation of 2009 in the Department of Computer Science.</p>
 			</div>
 		</div>
-	
+
 		<div class="row-fluid">
-			<div class="span12">		
+			<div class="span12">
 				<h2>Other Stuff</h2>
 				<a href="http://www.amazon.co.uk/wishlist/3TY81IX44LWLL">My Amazon wishlist.</a>
 			</div>
