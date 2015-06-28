@@ -42,8 +42,6 @@
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 				<li><a href="./index.php">Home</a></li>
-				<!--<li><a href="./reading-list.php">Stuff I've been reading</a></li>
-				<li><a href="./glossary.html">A glossary of useful words</a></li> -->
 				<li><a href="./hashlife.html">Gosper's Algorithm</a></li>
 				<li><a href="./playerstage-manual.html">Player/Stage Manual</a></li>
 				<li><a href="./soundboard.html">E-Puck Extension</a></li>
@@ -56,7 +54,7 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="hero-unit">
-					<h1>Jennifer Owen's Research Website</h1>
+					<h1>Jenny Owen's Website</h1>
 					<p>I'm a computer science research student at the university of York. I'm working on modelling swarming robotics using the CoSMoS framework.</p>
 				</div>
 			</div>
@@ -76,10 +74,6 @@
 					'file' => './mypics/brokering_deals.jpg',
 					'text' => 'brokering an important business deal'
 				),
-				//array(
-				//	'file' => './mypics/comtemplating_issues.jpg',
-				//	'text' => 'contemplating the issues of the day'
-				//),
 				array(
 					'file' => './mypics/exploring.jpg',
 					'text' => 'discovering new places',
@@ -152,7 +146,7 @@
 
 
 		<hr />
-		<div class="row-fluid">
+		<!--div class="row-fluid">
 			<div class="span5">
 				<a href="http://www.cosmos-research.org" class="picture">
 					<img src="./cosmos.png" alt="COmplex Systems MOdelling and Simulation">
@@ -163,7 +157,7 @@
 				<p>I've made a <a onClick="javascript: pageTracker._trackPageview('/downloads/cosmos-printable-stl');" href="http://dl.dropbox.com/u/9291393/mywebsite/3D-modelling/cosmos-printable.stl">3D printable version of the CoSMoS logo</a> which you can download and print for yourself. It will (ideally) give you an object that looks like <a onClick="javascript: pageTracker._trackPageview('/downloads/cosmos-printable-png');" href="http://dl.dropbox.com/u/9291393/mywebsite/3D-modelling/cosmos-printable3D.png">this</a>.</p>
 			</div>
 		</div>
-		<hr />
+		<hr /-->
 
 
 
@@ -173,6 +167,8 @@
 			<div class="span12">
 				<h2>Publications</h2>
 				<ul>
+					<li>Jennifer Owen (2013) <a href="http://etheses.whiterose.ac.uk/5018/" onClick="javascript: pageTracker._trackPageview('/downloads/thesis');>An Investigation of Loose Coupling in Evolutionary Swarm Robotics.</a> <i>PhD thesis, University of York.</i></li>
+					
 					<li>Jennifer Owen (2011) "Developing a Simulation and Hardware for a Robot Swarm Using Sound to Communicate". <i>In: Proceedings of the Fourth York Doctoral Symposium on Computer Science, York UK</i>. pp98-99. <a href="./publications/DevelopingaSimulationandHardwareforaRobotSwarmUsingSoundtoCommunicate.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/yds2011abstract');">Poster abstract</a>, <a href="http://dl.dropbox.com/u/9291393/mywebsite/DevelopingaSimulationandHardwareforaRobotSwarmUsingSoundtoCommunicatePOSTER.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/yds2011poster');">poster</a>.</li>
 
 					<li>Jennifer Owen, Susan Stepney, Jon Timmis and Alan Winfield (2010)<a href="./publications/ExploitingLooseHorizontalCouplinginEvolutionarySwarmRobotics.pdf" onClick="javascript: pageTracker._trackPageview('/downloads/ants2010');">"Exploiting Loose Horizontal Coupling In Evolutionary Swarm Robotics"</a>. <i>In: Swarm Intelligence, 7th International Conference, ANTS 2010. Brussels, Belgium</i> Lecture Notes in Computer Science vol. 6234. Springer-Verlag.</li>
