@@ -163,8 +163,10 @@
 			new myPicture('./mypics/female_engineer.jpg',
 			'being a female engineer',
 			'http://www.ianmartindale.co.uk',
-			'Image (C) Ian Martindale, York based wedding and portrait photographer',
-			650
+			'Image (C) Ian Martindale, York based wedding and portrait photographer'
+			),
+			new myPicture('./mypics/parrot.JPG',
+			'being a pirate'
 			)
 		];
 		
@@ -178,15 +180,10 @@
 			else {
 				this.alt = alt;
 			}
-			if (width != undefined) {
-				this.width = width;
-			}
 			this.generateHTML = function() {
 				str  = "<a href=\"" + this.link + "\">";
 				str += "<img src=\"" + this.file + "\"";
-				if (width != undefined) {
-					str += " width=\"" + this.width + "\"";
-				}
+				str += " title=\"" + this.alt + "\"";
 				str += " alt=\"" + this.alt + "\"";
 				str += "/>"; 	// close img
 				str += "</a>";	// close link
@@ -195,6 +192,7 @@
 		};
 		
 		var chosenImg = Math.floor(Math.random() * pictureset.length);
+		chosenImg = 5;
 		document.getElementById("imgCount").innerHTML = pictureset.length;
 		document.getElementById("imgDescription").innerHTML = pictureset[chosenImg].text;
 		document.getElementById("imgDiv").innerHTML = pictureset[chosenImg].generateHTML();
